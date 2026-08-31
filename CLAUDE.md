@@ -29,7 +29,7 @@ Kayman (junior Java dev) pisze **cały kod produkcyjny sam**. Rola Claude'a to:
 
 | Warstwa | Technologia | Uwagi |
 |---|---|---|
-| Backend | Java 21 (LTS), Spring Boot 3.x | Java 25 jest na maszynie, ale projekt celuje w 21 |
+| Backend | Java 25 (LTS), Spring Boot 4.1.x | Java 25 jest już zainstalowana; SB 3.x jest poza wsparciem OSS |
 | Build | Maven (multi-module monorepo) | |
 | Baza | PostgreSQL, osobna baza per serwis | Flyway do migracji |
 | Cache/locki | Redis | blokada miejsca z TTL |

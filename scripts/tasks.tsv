@@ -1,5 +1,5 @@
 # id	sprint	area	est	title
-TF-1	0	infra	2	Toolchain: SDKMAN + Java 21, Maven, nvm + Node LTS, gh CLI
+TF-1	0	infra	2	Toolchain: SDKMAN + Maven, nvm + Node LTS, gh CLI
 TF-2	0	infra	2	Repo na GitHubie, GitHub Projects board, konwencje branchy i commitów
 TF-3	0	backend	3	Maven multi-module: parent POM + puste moduły serwisów
 TF-4	0	infra	4	docker-compose.yml od zera: Postgres, Redis, RabbitMQ, MailHog
