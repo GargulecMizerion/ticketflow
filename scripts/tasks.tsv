@@ -11,39 +11,49 @@ TF-9	1	backend	5	REST API: kontrolery, DTO, MapStruct, walidacja (Bean Validatio
 TF-10	1	backend	3	Obsługa błędów: @RestControllerAdvice + RFC 7807 ProblemDetail
 TF-11	1	backend	6	Testy: unit + @DataJpaTest + integracyjne na Testcontainers
 TF-12	1	devops	3	Dockerfile (multi-stage) + wpięcie serwisu w compose
-TF-13	2	frontend	5	Angular CLI, struktura projektu, routing, standalone components
-TF-14	2	frontend	4	HttpClient, serwisy, typowanie odpowiedzi API, obsługa błędów
-TF-15	2	frontend	6	Widoki: lista wydarzeń + strona szczegółów
-TF-16	2	frontend	6	Mapa sali w SVG: klikalne miejsca, stany wolne/zajęte/wybrane
-TF-17	2	devops	3	Dockerfile z nginx + wpięcie w compose
-TF-18	3	backend	5	identity-service: rejestracja, logowanie, hasła przez BCrypt
-TF-19	3	backend	6	JWT: wystawianie, podpis, walidacja, refresh token
-TF-20	3	backend	5	Spring Security: SecurityFilterChain, custom filtr, role
-TF-21	3	backend	5	API Gateway (Spring Cloud Gateway): routing + walidacja tokenu
-TF-22	3	frontend	5	Angular: HTTP interceptor, route guard, ekran logowania
-TF-23	4	backend	4	Model rezerwacji + maszyna stanów (PENDING/CONFIRMED/EXPIRED/CANCELLED)
-TF-24	4	backend	5	Blokada miejsca w Redis z TTL (SET NX EX)
-TF-25	4	backend	5	Optimistic locking (@Version) + obsługa OptimisticLockException
-TF-26	4	backend	5	Test współbieżności: 20 wątków walczy o 1 miejsce, dokładnie 1 wygrywa
-TF-27	4	frontend	5	Angular: koszyk + timer odliczający do wygaśnięcia rezerwacji
-TF-28	5	backend	4	Topologia Rabbita jako kod: exchange, queue, binding, routing keys
-TF-29	5	backend	6	Wygasanie rezerwacji przez TTL + Dead Letter Exchange
-TF-30	5	backend	5	notification-service: konsument zdarzeń, maile, MailHog, szablony
-TF-31	5	backend	5	Retry z backoffem, DLQ, idempotencja konsumenta
-TF-32	6	backend	5	Stripe test mode, PaymentIntent, klucze poza repo
-TF-33	6	backend	6	Webhooki: weryfikacja podpisu, idempotencja, retry Stripe
-TF-34	6	backend	7	Saga: rezerwacja -> płatność -> bilet, z kompensacją
-TF-35	6	frontend	5	Angular: Stripe Elements, ekran płatności, obsługa 3D Secure
-TF-36	6	backend	5	Generowanie biletu: PDF + kod QR
-TF-37	7	infra	5	Keycloak w compose, realm jako kod (import JSON)
-TF-38	7	backend	6	Migracja serwisów na OAuth2 Resource Server
-TF-39	7	frontend	5	Angular + OIDC (Authorization Code + PKCE)
-TF-40	7	backend	6	Role CUSTOMER/ORGANIZER/ADMIN + panel organizatora
-TF-41	8	devops	5	Actuator + Prometheus + Grafana, dashboard z metrykami biznesowymi
-TF-42	8	devops	5	Distributed tracing (Micrometer Tracing + Zipkin/Tempo)
-TF-43	8	devops	4	Structured logging (JSON) + correlation ID przez wszystkie serwisy
-TF-44	8	backend	5	Resilience4j: circuit breaker, retry, timeout między serwisami
-TF-45	9	backend	6	WebSocket: live status miejsc na mapie sali
-TF-46	9	frontend	6	Panel organizatora: tworzenie wydarzeń, podgląd sprzedaży
-TF-47	9	frontend	5	Testy E2E (Playwright): pełna ścieżka zakupu
-TF-48	9	docs	4	README z diagramami architektury, nagranie demo, deploy
+TF-49	2	infra	4	Serwer: VPS, klucze SSH, użytkownik non-root, firewall, automatyczne aktualizacje
+TF-50	2	infra	4	docker-compose.prod.yml: różnice vs lokalny, limity pamięci JVM, restart policy
+TF-51	2	infra	4	Domena + Caddy jako reverse proxy + HTTPS (Let's Encrypt)
+TF-52	2	devops	4	GitHub Actions: automatyczny deploy na push do main
+TF-53	2	devops	3	Sekrety: GitHub Secrets + .env na serwerze, zero sekretów w repo
+TF-13	3	frontend	5	Angular CLI, struktura projektu, routing, standalone components
+TF-14	3	frontend	4	HttpClient, serwisy, typowanie odpowiedzi API, obsługa błędów
+TF-15	3	frontend	6	Widoki: lista wydarzeń + strona szczegółów
+TF-16	3	frontend	6	Mapa sali w SVG: klikalne miejsca, stany wolne/zajęte/wybrane
+TF-17	3	devops	3	Dockerfile z nginx + wpięcie w compose
+TF-18	4	backend	5	identity-service: rejestracja, logowanie, hasła przez BCrypt
+TF-19	4	backend	6	JWT: wystawianie, podpis, walidacja, refresh token
+TF-20	4	backend	5	Spring Security: SecurityFilterChain, custom filtr, role
+TF-21	4	backend	5	API Gateway (Spring Cloud Gateway): routing + walidacja tokenu
+TF-22	4	frontend	5	Angular: HTTP interceptor, route guard, ekran logowania
+TF-23	5	backend	4	Model rezerwacji + maszyna stanów (PENDING/CONFIRMED/EXPIRED/CANCELLED)
+TF-24	5	backend	5	Blokada miejsca w Redis z TTL (SET NX EX)
+TF-25	5	backend	5	Optimistic locking (@Version) + obsługa OptimisticLockException
+TF-26	5	backend	5	Test współbieżności: 20 wątków walczy o 1 miejsce, dokładnie 1 wygrywa
+TF-27	5	frontend	5	Angular: koszyk + timer odliczający do wygaśnięcia rezerwacji
+TF-28	6	backend	4	Topologia Rabbita jako kod: exchange, queue, binding, routing keys
+TF-29	6	backend	6	Wygasanie rezerwacji przez TTL + Dead Letter Exchange
+TF-30	6	backend	5	notification-service: konsument zdarzeń, maile, MailHog, szablony
+TF-31	6	backend	5	Retry z backoffem, DLQ, idempotencja konsumenta
+TF-32	7	backend	5	Stripe test mode, PaymentIntent, klucze poza repo
+TF-33	7	backend	6	Webhooki: weryfikacja podpisu, idempotencja, retry Stripe
+TF-34	7	backend	7	Saga: rezerwacja -> płatność -> bilet, z kompensacją
+TF-35	7	frontend	5	Angular: Stripe Elements, ekran płatności, obsługa 3D Secure
+TF-36	7	backend	5	Generowanie biletu: PDF + kod QR
+TF-37	8	infra	5	Keycloak w compose, realm jako kod (import JSON)
+TF-38	8	backend	6	Migracja serwisów na OAuth2 Resource Server
+TF-39	8	frontend	5	Angular + OIDC (Authorization Code + PKCE)
+TF-40	8	backend	6	Role CUSTOMER/ORGANIZER/ADMIN + panel organizatora
+TF-41	9	devops	5	Actuator + Prometheus + Grafana, dashboard z metrykami biznesowymi
+TF-42	9	devops	5	Distributed tracing (Micrometer Tracing + Zipkin/Tempo)
+TF-43	9	devops	4	Structured logging (JSON) + correlation ID przez wszystkie serwisy
+TF-44	9	backend	5	Resilience4j: circuit breaker, retry, timeout między serwisami
+TF-45	10	backend	6	WebSocket: live status miejsc na mapie sali
+TF-46	10	frontend	6	Panel organizatora: tworzenie wydarzeń, podgląd sprzedaży
+TF-47	10	frontend	5	Testy E2E (Playwright): pełna ścieżka zakupu
+TF-48	10	docs	4	README z diagramami architektury, nagranie demo, deploy
+TF-54	11	devops	4	Obrazy w GHCR zamiast budowania na serwerze
+TF-55	11	devops	5	Deploy bez przestoju: health checki, rolling restart, rollback do poprzedniego tagu
+TF-56	11	devops	4	Backup bazy: pg_dump + cron + test odtworzenia z backupu
+TF-57	11	devops	4	Alerty produkcyjne: Grafana -> Discord/e-mail, budżet zasobów
+TF-58	11	devops	4	Runbook + odtworzenie środowiska od zera na czystym serwerze

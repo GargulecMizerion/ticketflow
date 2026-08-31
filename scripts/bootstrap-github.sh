@@ -18,6 +18,15 @@ DRY_RUN="${DRY_RUN:-0}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TASKS_FILE="$SCRIPT_DIR/tasks.tsv"
 
+# Nazwy sprintow -> tytuly milestone'ow. Uzywane tez przy etykietach,
+# wiec musi byc zadeklarowane przed pierwszym uzyciem.
+declare -A SPRINT_NAME=(
+  [0]="Fundament"          [1]="catalog-service"     [2]="Pierwszy deploy"
+  [3]="Angular od zera"    [4]="Auth + gateway"      [5]="Booking + wspolbieznosc"
+  [6]="RabbitMQ"           [7]="Platnosci"           [8]="Keycloak"
+  [9]="Obserwowalnosc"    [10]="Realtime + finisz"  [11]="Hardening produkcyjny"
+)
+
 # run() wykonuje polecenie albo tylko je wypisuje, zaleznie od DRY_RUN.
 run() {
   if [[ "$DRY_RUN" == "1" ]]; then
@@ -80,7 +89,7 @@ create_label "infra"    "8250df" "Docker, bazy, brokery"
 create_label "devops"   "2da44e" "CI, obserwowalnosc, deploy"
 create_label "docs"     "6e7781" "Dokumentacja i ADR"
 
-for s in 0 1 2 3 4 5 6 7 8 9; do
+for s in $(seq 0 $((${#SPRINT_NAME[@]} - 1))); do
   create_label "sprint-$s" "ededed" "Sprint $s"
 done
 
@@ -88,16 +97,10 @@ done
 # Sprint mapujemy na milestone, bo GitHub pokazuje przy nim pasek postepu.
 say "Milestone'y (sprinty)"
 
-declare -A SPRINT_NAME=(
-  [0]="Fundament"        [1]="catalog-service"  [2]="Angular od zera"
-  [3]="Auth + gateway"   [4]="Booking + wspolbieznosc" [5]="RabbitMQ"
-  [6]="Platnosci"        [7]="Keycloak"         [8]="Obserwowalnosc"
-  [9]="Realtime + finisz"
-)
 
 EXISTING_MS="$(gh api "repos/$OWNER/$REPO_NAME/milestones?state=all&per_page=100" --jq '.[].title' 2>/dev/null || true)"
 
-for s in 0 1 2 3 4 5 6 7 8 9; do
+for s in $(seq 0 $((${#SPRINT_NAME[@]} - 1))); do
   title="Sprint $s - ${SPRINT_NAME[$s]}"
   if grep -qxF "$title" <<<"$EXISTING_MS"; then
     echo "  '$title' juz istnieje"

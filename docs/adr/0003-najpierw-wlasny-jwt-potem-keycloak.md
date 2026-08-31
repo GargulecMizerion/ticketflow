@@ -7,8 +7,8 @@ Docelowo chcemy Keycloaka (standard w firmach). Ale wrzucenie go od razu oznacza
 że OAuth2/OIDC pozostaje czarną skrzynką — klikasz konfigurację i „działa".
 
 ## Decyzja
-Sprint 3: własny `identity-service` wystawiający JWT, ręcznie napisany filtr
-w Spring Security. Sprint 7: migracja na Keycloaka jako OAuth2 Resource Server.
+Sprint 4: własny `identity-service` wystawiający JWT, ręcznie napisany filtr
+w Spring Security. Sprint 8: migracja na Keycloaka jako OAuth2 Resource Server.
 
 ## Uzasadnienie
 Kolejność ma znaczenie dydaktyczne. Po ręcznym napisaniu wystawiania i walidacji

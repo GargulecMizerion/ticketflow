@@ -38,7 +38,8 @@ Kayman (junior Java dev) pisze **cały kod produkcyjny sam**. Rola Claude'a to:
 | Płatności | Stripe (test mode) | PaymentIntent + webhooki |
 | Frontend | Angular (standalone components, signals) | **nowy stack dla Kaymana** |
 | Konteneryzacja | Docker + docker-compose | |
-| Obserwowalność | Actuator, Prometheus, Grafana, tracing | Sprint 8 |
+| Obserwowalność | Actuator, Prometheus, Grafana, tracing | Sprint 9 |
+| Hosting | VPS + docker-compose + Caddy | publiczne demo od Sprintu 2 (ADR-0004) |
 | Testy | JUnit 5, Mockito, Testcontainers, Playwright | |
 
 ## Mikroserwisy

@@ -2,7 +2,7 @@
 
 Sprinty dwutygodniowe, ~10-15h/tydzień → ~20-30h na sprint.
 Estymaty są dla **juniora uczącego się danej technologii**, nie dla seniora.
-Szacowany czas całości: **~5 miesięcy**.
+Szacowany czas całości: **~6 miesięcy** (12 sprintów, 58 tasków).
 
 Legenda statusów: `TODO` · `IN PROGRESS` · `REVIEW` · `DONE`
 
@@ -43,7 +43,34 @@ lazy loading, N+1, Testcontainers.
 
 ---
 
-## Sprint 2 — Angular od zera (~24h)
+## Sprint 2 — Pierwszy deploy (~19h)
+
+Cel: `catalog-service` działa pod publicznym adresem, z HTTPS, wdrażany automatycznie
+przy każdym pushu do `main`.
+
+**Dlaczego tak wcześnie, a nie na końcu?** Bo deploy zostawiony na finał oznacza, że
+wszystkie problemy wdrożeniowe spadają na ciebie naraz, gdy masz już 6 serwisów.
+Tutaj wdrażasz jeden serwis i jedną bazę — najmniejszą rzecz, jaką da się wdrożyć.
+Każdy kolejny sprint tylko dokłada do działającego pipeline'u. To jest sens
+„walking skeleton": najpierw cienka kreska przez całą architekturę, potem mięso.
+
+| ID | Task | Est | Status |
+|---|---|---|---|
+| TF-49 | Serwer: VPS, klucze SSH, użytkownik non-root, firewall, auto-aktualizacje | 4h | TODO |
+| TF-50 | `docker-compose.prod.yml`: różnice vs lokalny, limity pamięci JVM, restart policy | 4h | TODO |
+| TF-51 | Domena + Caddy jako reverse proxy + HTTPS (Let's Encrypt) | 4h | TODO |
+| TF-52 | GitHub Actions: automatyczny deploy na push do `main` | 4h | TODO |
+| TF-53 | Sekrety: GitHub Secrets + `.env` na serwerze, zero sekretów w repo | 3h | TODO |
+
+**Pojęcia:** różnica między konfiguracją lokalną a produkcyjną (Spring profiles),
+dlaczego JVM w kontenerze potrafi zjeść całą pamięć hosta (`-XX:MaxRAMPercentage`),
+czym reverse proxy różni się od load balancera, jak działa wyzwanie ACME w Let's Encrypt.
+
+**Pułapka:** pierwszy raz, gdy commitniesz sekret do repo, będziesz musiał go **unieważnić**,
+nie tylko usunąć. Historia gita pamięta. TF-53 jest po to, żeby to się nie zdarzyło.
+
+---
+## Sprint 3 — Angular od zera (~24h)
 
 Cel: nauka nowego stacku. Osobny sprint, bo to dla ciebie nowy język i framework.
 
@@ -60,7 +87,7 @@ signals, change detection, dlaczego DI w Angularze przypomina to ze Springa.
 
 ---
 
-## Sprint 3 — Autentykacja i gateway (~26h)
+## Sprint 4 — Autentykacja i gateway (~26h)
 
 Cel: zrozumieć JWT od środka, zanim schowasz go za Keycloakiem (ADR-0003).
 
@@ -77,7 +104,7 @@ ukradnie token — i dlaczego stateless JWT nie da się „unieważnić" bez dod
 
 ---
 
-## Sprint 4 — booking-service i współbieżność (~24h)
+## Sprint 5 — booking-service i współbieżność (~24h)
 
 **To jest serce projektu.** Najtrudniejszy i najciekawszy sprint — tu są pytania,
 które padają na rozmowach o pracę.
@@ -95,7 +122,7 @@ transakcji, dlaczego `synchronized` nie działa gdy masz 3 instancje serwisu.
 
 ---
 
-## Sprint 5 — RabbitMQ i notification-service (~20h)
+## Sprint 6 — RabbitMQ i notification-service (~20h)
 
 | ID | Task | Est | Status |
 |---|---|---|---|
@@ -109,7 +136,7 @@ ack/nack, poison message.
 
 ---
 
-## Sprint 6 — Płatności (~28h)
+## Sprint 7 — Płatności (~28h)
 
 | ID | Task | Est | Status |
 |---|---|---|---|
@@ -124,7 +151,7 @@ momencie padnie? Odpowiedź na to pytanie to cały TF-34.
 
 ---
 
-## Sprint 7 — Keycloak (~22h)
+## Sprint 8 — Keycloak (~22h)
 
 | ID | Task | Est | Status |
 |---|---|---|---|
@@ -138,7 +165,7 @@ To najlepszy materiał na rozmowę kwalifikacyjną z całego projektu.
 
 ---
 
-## Sprint 8 — Obserwowalność i odporność (~19h)
+## Sprint 9 — Obserwowalność i odporność (~19h)
 
 | ID | Task | Est | Status |
 |---|---|---|---|
@@ -149,7 +176,7 @@ To najlepszy materiał na rozmowę kwalifikacyjną z całego projektu.
 
 ---
 
-## Sprint 9 — Realtime i finisz (~21h)
+## Sprint 10 — Realtime i finisz (~21h)
 
 | ID | Task | Est | Status |
 |---|---|---|---|
@@ -160,11 +187,33 @@ To najlepszy materiał na rozmowę kwalifikacyjną z całego projektu.
 
 ---
 
+## Sprint 11 — Hardening produkcyjny (~21h)
+
+Cel: środowisko, które przeżyje twoją nieobecność. Do tej pory deploy „działał";
+teraz ma być odporny.
+
+| ID | Task | Est | Status |
+|---|---|---|---|
+| TF-54 | Obrazy w GHCR zamiast budowania na serwerze | 4h | TODO |
+| TF-55 | Deploy bez przestoju: health checki, rolling restart, rollback do poprzedniego tagu | 5h | TODO |
+| TF-56 | Backup bazy: `pg_dump` + cron + **test odtworzenia z backupu** | 4h | TODO |
+| TF-57 | Alerty produkcyjne: Grafana → Discord/e-mail, budżet zasobów | 4h | TODO |
+| TF-58 | Runbook + odtworzenie środowiska od zera na czystym serwerze | 4h | TODO |
+
+**TF-56 — uwaga:** backup, którego nigdy nie odtworzyłeś, nie jest backupem. Zadanie
+jest skończone dopiero wtedy, gdy skasujesz bazę i podniesiesz ją z kopii.
+
+**TF-58** to najlepszy test całego projektu: bierzesz czysty serwer i odtwarzasz
+środowisko wyłącznie z repo i runbooka. Jeśli się uda — masz Infrastructure as Code
+w praktyce, a nie w deklaracji. Jeśli nie — dowiesz się, co trzymałeś tylko w głowie.
+
+---
 ## Poza zakresem (świadomie odcięte)
 
 Żeby projekt się skończył, a nie ciągnął w nieskończoność:
 
 - Kafka — RabbitMQ wystarcza do tej domeny (ADR-0002). Ewentualnie później, do analityki.
-- Kubernetes — docker-compose starcza. K8s to osobny projekt na CV.
+- Kubernetes — na jednym serwerze compose w zupełności wystarcza (ADR-0004). Naturalne
+  rozszerzenie po TF-58: migracja na k3s. Ale dopiero gdy projekt będzie skończony.
 - Service discovery (Eureka) — przy 6 serwisach i compose to niepotrzebna warstwa.
 - Zwroty i anulowanie po zakupie, ceny dynamiczne, wielojęzyczność, apka mobilna.
