@@ -14,7 +14,7 @@ Cel: działające `docker compose up`, pusty ale kompilujący się monorepo, CI 
 
 | ID | Task | Est | Status |
 |---|---|---|---|
-| TF-1 | Toolchain: SDKMAN + Java 21, Maven, nvm + Node LTS, `gh` CLI | 2h | TODO |
+| TF-1 | Toolchain: SDKMAN + Maven, nvm + Node LTS, `gh` CLI (Java 25 już zainstalowana) | 2h | DONE |
 | TF-2 | Repo na GitHubie, GitHub Projects board, konwencje branchy i commitów | 2h | TODO |
 | TF-3 | Maven multi-module: parent POM + puste moduły serwisów | 3h | TODO |
 | TF-4 | **`docker-compose.yml` od zera**: Postgres, Redis, RabbitMQ, MailHog | 4h | TODO |

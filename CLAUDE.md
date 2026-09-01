@@ -70,10 +70,17 @@ podstawy RabbitMQ, czyta ze zrozumieniem Dockerfile/compose.
 **Uczy się w tym projekcie od zera:** Angular/TypeScript, pisanie Dockerfile i compose
 od podstaw, mikroserwisy, Spring Security/OAuth2, Stripe, obserwowalność, współbieżność.
 
+**Luki wykryte w trakcie (TF-1):** środowisko uruchomieniowe poniżej poziomu Springa —
+rozstrzyganie `PATH`, rola `JAVA_HOME`, różnica JRE vs JDK, po co menedżery wersji
+(SDKMAN/nvm). Przy taskach infra warto te rzeczy nazywać wprost, nie zakładać.
+
 **Dostępność:** ~10-15h/tygodniowo. Taski krojone na 4-6h. Sprinty dwutygodniowe.
 
 ## Stan projektu
 
-**Aktualny sprint:** Sprint 0 — Fundament
-**Ostatnio ukończone:** —
-**Następny task:** TF-1 (instalacja toolchainu)
+**Aktualny sprint:** Sprint 0 — Fundament (1/6 DONE)
+**Ostatnio ukończone:** TF-1 — toolchain (2026-09-01). Wersje: `docs/toolchain.md`.
+**Następny task:** TF-2 (repo + GitHub Projects, przez `scripts/bootstrap-github.sh`)
+
+Konto GitHub: `GargulecMizerion`, token ma scope `project` (potrzebny do boardu).
+Repo nie ma jeszcze remote'a — zakłada go TF-2.
