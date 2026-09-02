@@ -78,9 +78,25 @@ rozstrzyganie `PATH`, rola `JAVA_HOME`, różnica JRE vs JDK, po co menedżery w
 
 ## Stan projektu
 
-**Aktualny sprint:** Sprint 0 — Fundament (1/6 DONE)
-**Ostatnio ukończone:** TF-1 — toolchain (2026-09-01). Wersje: `docs/toolchain.md`.
-**Następny task:** TF-2 (repo + GitHub Projects, przez `scripts/bootstrap-github.sh`)
+**Aktualny sprint:** Sprint 0 — Fundament (2/6 DONE)
+**Ostatnio ukończone:** TF-2 — repo + board (2026-09-02).
+**Następny task:** TF-3 — Maven multi-module: parent POM + puste moduły serwisów (3h).
 
-Konto GitHub: `GargulecMizerion`, token ma scope `project` (potrzebny do boardu).
-Repo nie ma jeszcze remote'a — zakłada go TF-2.
+### Infrastruktura projektowa (od TF-2)
+
+- Repo: https://github.com/GargulecMizerion/ticketflow (**public**)
+- Board: https://github.com/users/GargulecMizerion/projects/4 — kolumny Todo / In Progress / Review / Done
+- 58 issues, 17 etykiet (`backend`/`frontend`/`infra`/`devops`/`docs` + `sprint-0..11`),
+  12 milestone'ów = sprinty. `scripts/bootstrap-github.sh` jest idempotentny — ponowne
+  uruchomienie daje `utworzone: 0`, więc bezpiecznie dopisywać nowe taski do `tasks.tsv`.
+
+**Numeracja issues:** `#n == TF-n` tylko dla TF-1..TF-12; dalej jest rozjazd
+(TF-49..TF-53 zajmują #13..#17, bo sprinty 2 i 11 dopisano do `tasks.tsv` później).
+Świadoma decyzja Kaymana: nowe taski i tak będą dochodzić w trakcie z wysokimi
+numerami, więc zgodność numerów jest nie do utrzymania. **Zawsze identyfikuj task po
+prefiksie `TF-` w tytule, nie po numerze issue.**
+
+Zostało do zrobienia ręcznie w UI (opcjonalne): ustawić widok „Board" i pogrupować po Milestone.
+
+Drobiazg w skrypcie: linia 109 ma `>/dev/null`, które w trybie `DRY_RUN=1` połyka
+`printf` z `run()` — przy milestone'ach nie widać `[dry-run] gh api ...`. Kosmetyka.
