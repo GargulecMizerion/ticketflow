@@ -56,7 +56,9 @@ Kayman (junior Java dev) pisze **cały kod produkcyjny sam**. Rola Claude'a to:
 
 ## Konwencje
 
-- **Branche:** `feat/TF-12-nazwa`, `fix/TF-33-nazwa`, `chore/...`
+- **Branche:** `TF-12-nazwa-zadania` — numer taska + krótki opis, bez prefiksu typu.
+  Decyzja Kaymana (2026-09-09): prefiksy `feat/`/`fix/` dublują informację, która i tak
+  jest w Conventional Commit. Numer mówi gdzie szukać kontekstu, słowa mówią co to jest.
 - **Commity:** Conventional Commits — `feat(catalog): add seat map endpoint`
 - **Taski:** `TF-<numer>`, źródło prawdy = GitHub Projects (fallback: `docs/backlog.md`)
 - **PR:** każdy task = jeden PR do `main`, nawet solo. Trening opisywania zmian.
@@ -73,6 +75,14 @@ od podstaw, mikroserwisy, Spring Security/OAuth2, Stripe, obserwowalność, wsp�
 **Luki wykryte w trakcie (TF-1):** środowisko uruchomieniowe poniżej poziomu Springa —
 rozstrzyganie `PATH`, rola `JAVA_HOME`, różnica JRE vs JDK, po co menedżery wersji
 (SDKMAN/nvm). Przy taskach infra warto te rzeczy nazywać wprost, nie zakładać.
+
+**Angielski (ujawnione 2026-09-07):** słaby — nie czyta swobodnie dokumentacji po
+angielsku. Sam link do `docs.spring.io` czy `maven.apache.org` nie jest dla niego
+materiałem, tylko barierą. W sekcji „Materiały" każdego briefu dawaj **polskie
+streszczenie każdej pozycji** (2-4 zdania: co w tej sekcji jest i po co tam idzie),
+a kluczowe zdania cytuj po angielsku z tłumaczeniem obok. Kayman chce się angielskiego
+uczyć, więc oryginałów nie usuwaj — układ „polski wykład + cytat oryginału" działa
+lepiej niż samo tłumaczenie.
 
 **Dostępność:** ~10-15h/tygodniowo. Taski krojone na 4-6h. Sprinty dwutygodniowe.
 
