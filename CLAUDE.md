@@ -90,7 +90,32 @@ lepiej niż samo tłumaczenie.
 
 **Aktualny sprint:** Sprint 0 — Fundament (2/6 DONE)
 **Ostatnio ukończone:** TF-2 — repo + board (2026-09-02).
-**Następny task:** TF-3 — Maven multi-module: parent POM + puste moduły serwisów (3h).
+**W toku:** TF-3 — Maven multi-module, branch `TF-3-maven-multimodule` (stan na 2026-09-12).
+
+### TF-3 — gdzie stoimy (przerwane 2026-09-12, Kayman wraca za kilka dni)
+
+Plan taska ma 7 kroków. **Zrobione 1-5:**
+- root `pom.xml` (`pl.kayman`, `0.0.1`, packaging pom) importuje `spring-boot-dependencies`
+  4.1.1 przez property + `type=pom`/`scope=import` (realizacja ADR-0005),
+- `maven.compiler.release=25`, UTF-8, `spring-boot-maven-plugin` w `pluginManagement`,
+- `catalog-service/` — pierwszy moduł, `<parent>` na root, starter-web bez wersji,
+  klasa `CatalogServiceApplication`; `mvn -q verify` z korzenia i `spring-boot:run` działają,
+- Kayman potwierdził w `dependency:tree`, że wersja startera przychodzi z BOM-u
+  i rozumie zależności przechodnie (starter = „zlepek").
+
+**Zostało 6-7:** 5 pozostałych modułów (`identity-service`, `booking-service`,
+`payment-service`, `notification-service`, `api-gateway`) — kopia POM-a
+z `catalog-service`, zmiana `artifactId`/pakietu/klasy, dopisanie do `<modules>`;
+potem sprawdzić `.gitignore` pod `target/`, commit, PR do `main`, board → Review.
+DoD i pytania kontrolne — w rozmowie z 2026-09-12 (`grep -r "<version>" */pom.xml`
+ma dać zero trafień; wersja Boota w repo dokładnie raz).
+
+Uwaga: na 2026-09-12 `pom.xml` i `catalog-service/` były **niezacommitowane** —
+sprawdź `git status` na starcie sesji.
+
+Co poszło dobrze: Kayman sam odczytał błąd `'artifactId' is missing` i zrozumiał,
+że `groupId`/`version` już dziedziczą. Pytania „czym różni się projekt samodzielny
+od modułu", „co to `-pl`" — poziom Mavena poniżej Springa jest nowy, ale łapie szybko.
 
 ### Infrastruktura projektowa (od TF-2)
 
