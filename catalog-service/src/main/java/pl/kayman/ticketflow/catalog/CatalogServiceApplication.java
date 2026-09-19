@@ -1,4 +1,4 @@
-package pl.ticketflow.catalog;
+package pl.kayman.ticketflow.catalog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
