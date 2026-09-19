@@ -76,6 +76,11 @@ od podstaw, mikroserwisy, Spring Security/OAuth2, Stripe, obserwowalność, wsp�
 rozstrzyganie `PATH`, rola `JAVA_HOME`, różnica JRE vs JDK, po co menedżery wersji
 (SDKMAN/nvm). Przy taskach infra warto te rzeczy nazywać wprost, nie zakładać.
 
+**Luki wykryte w trakcie (TF-3):** Git poniżej poziomu `add/commit/push` — staging
+area, `--amend`, `reset --soft`, `--force-with-lease`; Maven: `pluginManagement` vs
+`plugins`, co dokładnie robi `scope=import`. Przy każdym PR sprawdzać stan gałęzi
+samemu, nie wierzyć „wrzucone".
+
 **Angielski (ujawnione 2026-09-07):** słaby — nie czyta swobodnie dokumentacji po
 angielsku. Sam link do `docs.spring.io` czy `maven.apache.org` nie jest dla niego
 materiałem, tylko barierą. W sekcji „Materiały" każdego briefu dawaj **polskie
@@ -88,34 +93,45 @@ lepiej niż samo tłumaczenie.
 
 ## Stan projektu
 
-**Aktualny sprint:** Sprint 0 — Fundament (2/6 DONE)
+**Aktualny sprint:** Sprint 0 — Fundament (2/6 DONE, TF-3 w Review)
 **Ostatnio ukończone:** TF-2 — repo + board (2026-09-02).
-**W toku:** TF-3 — Maven multi-module, branch `TF-3-maven-multimodule` (stan na 2026-09-12).
+**W Review:** TF-3 — PR #59 (`TF-3-maven-multimodule`), review zrobiony 2026-09-19,
+czeka na tytuł/opis PR-a i squash-merge.
+**Następny task:** TF-4 — `docker-compose.yml` od zera (Postgres, Redis, RabbitMQ, MailHog).
 
-### TF-3 — gdzie stoimy (przerwane 2026-09-12, Kayman wraca za kilka dni)
+### TF-3 — co ustalono (2026-09-19)
 
-Plan taska ma 7 kroków. **Zrobione 1-5:**
-- root `pom.xml` (`pl.kayman`, `0.0.1`, packaging pom) importuje `spring-boot-dependencies`
-  4.1.1 przez property + `type=pom`/`scope=import` (realizacja ADR-0005),
-- `maven.compiler.release=25`, UTF-8, `spring-boot-maven-plugin` w `pluginManagement`,
-- `catalog-service/` — pierwszy moduł, `<parent>` na root, starter-web bez wersji,
-  klasa `CatalogServiceApplication`; `mvn -q verify` z korzenia i `spring-boot:run` działają,
-- Kayman potwierdził w `dependency:tree`, że wersja startera przychodzi z BOM-u
-  i rozumie zależności przechodnie (starter = „zlepek").
+- **Pakiety:** `pl.kayman.ticketflow.<serwis>` (decyzja Kaymana; `groupId` = `pl.kayman`).
+- **Każdy moduł:** `starter-web` + `starter-test` (scope test) + smoke test `contextLoads()`
+  z `@SpringBootTest`. `api-gateway` i `notification-service` prawdopodobnie zgubią
+  `starter-web` w TF-21 / TF-30 — świadomie odłożone.
+- **Konsekwencja ADR-0005 (BOM zamiast parent POM), wykryta w praniu:** `scope=import`
+  nie importuje `pluginManagement`, więc `spring-boot-maven-plugin` musi mieć w root
+  `<version>${spring-boot.version}</version>` **i** jawne `<executions>` z `repackage` —
+  inaczej `mvn package` daje 2 KB thin jar, a build jest zielony. Kayman wsadził
+  `executions` do `pluginManagement` w root (dobra decyzja, moduły deklarują plugin
+  3 linijkami). **TODO docs:** dopisać to do sekcji „Konsekwencje" w ADR-0005.
+- 5 modułów wygenerował Claude jako scaffold (jawna prośba Kaymana), wytłumaczone
+  linijka po linijce. `CatalogServiceApplication` jest Kaymana — ma `static void main`
+  bez `public` (działa; niespójne z pozostałymi pięcioma, zostawione do jego decyzji).
+- DoD-check: `<version>` w modułach tylko w `<parent>` (6 trafień, to poprawne);
+  wersja Boota w repo dokładnie raz.
 
-**Zostało 6-7:** 5 pozostałych modułów (`identity-service`, `booking-service`,
-`payment-service`, `notification-service`, `api-gateway`) — kopia POM-a
-z `catalog-service`, zmiana `artifactId`/pakietu/klasy, dopisanie do `<modules>`;
-potem sprawdzić `.gitignore` pod `target/`, commit, PR do `main`, board → Review.
-DoD i pytania kontrolne — w rozmowie z 2026-09-12 (`grep -r "<version>" */pom.xml`
-ma dać zero trafień; wersja Boota w repo dokładnie raz).
+### TF-3 — co wyszło o Kaymanie
 
-Uwaga: na 2026-09-12 `pom.xml` i `catalog-service/` były **niezacommitowane** —
-sprawdź `git status` na starcie sesji.
-
-Co poszło dobrze: Kayman sam odczytał błąd `'artifactId' is missing` i zrozumiał,
-że `groupId`/`version` już dziedziczą. Pytania „czym różni się projekt samodzielny
-od modułu", „co to `-pl`" — poziom Mavena poniżej Springa jest nowy, ale łapie szybko.
+- **Git staging area to biała plama.** Dwa razy z rzędu commit złapał tylko część
+  zmian (`git mv` staguje sam, zwykły zapis pliku nie; `git add .` z podkatalogu).
+  Zamiast `reset --soft` + jednego commita zrobił trzeci commit — historia PR-a ma
+  3 commity z identycznym message, pierwszy się nie kompiluje. `--amend`,
+  `--force-with-lease`, `reset --soft` — wytłumaczone, nie utrwalone.
+  Przy kolejnych taskach: **przed „zrób review" kazać mu pokazać `git status`
+  i `git diff --stat main...origin/<branch>`.**
+- Conventional Commits nie weszły w nawyk (`TF-3 prepare all projects structure...`),
+  PR bez tytułu i opisu. To jest DoD, nie kosmetyka — pilnować przy każdym PR.
+- `gh pr view` bez `--json` nie pokazuje liczby plików — Kayman słusznie to zauważył.
+- Pytał „co tak naprawdę zmienia nazwa pakietu" — dobre pytanie, dostał
+  `@ComponentScan` i pułapkę beana poza pakietem Application. Pytania koncepcyjne
+  zadaje chętnie, gdy odpowiedź nie jest gotowcem.
 
 ### Infrastruktura projektowa (od TF-2)
 
