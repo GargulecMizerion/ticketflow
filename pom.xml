@@ -6,7 +6,12 @@
     <version>0.0.1</version>
     <packaging>pom</packaging>
     <modules>
+        <module>api-gateway</module>
+        <module>identity-service</module>
         <module>catalog-service</module>
+        <module>booking-service</module>
+        <module>payment-service</module>
+        <module>notification-service</module>
     </modules>
 
     <!-- Moje własne zmienne, nazywam je jak chce -->
@@ -34,6 +39,14 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
