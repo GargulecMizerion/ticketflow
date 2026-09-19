@@ -56,7 +56,9 @@ Kayman (junior Java dev) pisze **cały kod produkcyjny sam**. Rola Claude'a to:
 
 ## Konwencje
 
-- **Branche:** `feat/TF-12-nazwa`, `fix/TF-33-nazwa`, `chore/...`
+- **Branche:** `TF-12-nazwa-zadania` — numer taska + krótki opis, bez prefiksu typu.
+  Decyzja Kaymana (2026-09-09): prefiksy `feat/`/`fix/` dublują informację, która i tak
+  jest w Conventional Commit. Numer mówi gdzie szukać kontekstu, słowa mówią co to jest.
 - **Commity:** Conventional Commits — `feat(catalog): add seat map endpoint`
 - **Taski:** `TF-<numer>`, źródło prawdy = GitHub Projects (fallback: `docs/backlog.md`)
 - **PR:** każdy task = jeden PR do `main`, nawet solo. Trening opisywania zmian.
@@ -74,13 +76,46 @@ od podstaw, mikroserwisy, Spring Security/OAuth2, Stripe, obserwowalność, wsp�
 rozstrzyganie `PATH`, rola `JAVA_HOME`, różnica JRE vs JDK, po co menedżery wersji
 (SDKMAN/nvm). Przy taskach infra warto te rzeczy nazywać wprost, nie zakładać.
 
+**Angielski (ujawnione 2026-09-07):** słaby — nie czyta swobodnie dokumentacji po
+angielsku. Sam link do `docs.spring.io` czy `maven.apache.org` nie jest dla niego
+materiałem, tylko barierą. W sekcji „Materiały" każdego briefu dawaj **polskie
+streszczenie każdej pozycji** (2-4 zdania: co w tej sekcji jest i po co tam idzie),
+a kluczowe zdania cytuj po angielsku z tłumaczeniem obok. Kayman chce się angielskiego
+uczyć, więc oryginałów nie usuwaj — układ „polski wykład + cytat oryginału" działa
+lepiej niż samo tłumaczenie.
+
 **Dostępność:** ~10-15h/tygodniowo. Taski krojone na 4-6h. Sprinty dwutygodniowe.
 
 ## Stan projektu
 
 **Aktualny sprint:** Sprint 0 — Fundament (2/6 DONE)
 **Ostatnio ukończone:** TF-2 — repo + board (2026-09-02).
-**Następny task:** TF-3 — Maven multi-module: parent POM + puste moduły serwisów (3h).
+**W toku:** TF-3 — Maven multi-module, branch `TF-3-maven-multimodule` (stan na 2026-09-12).
+
+### TF-3 — gdzie stoimy (przerwane 2026-09-12, Kayman wraca za kilka dni)
+
+Plan taska ma 7 kroków. **Zrobione 1-5:**
+- root `pom.xml` (`pl.kayman`, `0.0.1`, packaging pom) importuje `spring-boot-dependencies`
+  4.1.1 przez property + `type=pom`/`scope=import` (realizacja ADR-0005),
+- `maven.compiler.release=25`, UTF-8, `spring-boot-maven-plugin` w `pluginManagement`,
+- `catalog-service/` — pierwszy moduł, `<parent>` na root, starter-web bez wersji,
+  klasa `CatalogServiceApplication`; `mvn -q verify` z korzenia i `spring-boot:run` działają,
+- Kayman potwierdził w `dependency:tree`, że wersja startera przychodzi z BOM-u
+  i rozumie zależności przechodnie (starter = „zlepek").
+
+**Zostało 6-7:** 5 pozostałych modułów (`identity-service`, `booking-service`,
+`payment-service`, `notification-service`, `api-gateway`) — kopia POM-a
+z `catalog-service`, zmiana `artifactId`/pakietu/klasy, dopisanie do `<modules>`;
+potem sprawdzić `.gitignore` pod `target/`, commit, PR do `main`, board → Review.
+DoD i pytania kontrolne — w rozmowie z 2026-09-12 (`grep -r "<version>" */pom.xml`
+ma dać zero trafień; wersja Boota w repo dokładnie raz).
+
+Uwaga: na 2026-09-12 `pom.xml` i `catalog-service/` były **niezacommitowane** —
+sprawdź `git status` na starcie sesji.
+
+Co poszło dobrze: Kayman sam odczytał błąd `'artifactId' is missing` i zrozumiał,
+że `groupId`/`version` już dziedziczą. Pytania „czym różni się projekt samodzielny
+od modułu", „co to `-pl`" — poziom Mavena poniżej Springa jest nowy, ale łapie szybko.
 
 ### Infrastruktura projektowa (od TF-2)
 
