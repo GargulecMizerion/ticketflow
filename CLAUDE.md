@@ -93,11 +93,11 @@ lepiej niż samo tłumaczenie.
 
 ## Stan projektu
 
-**Aktualny sprint:** Sprint 0 — Fundament (2/6 DONE, TF-3 w Review)
-**Ostatnio ukończone:** TF-2 — repo + board (2026-09-02).
-**W Review:** TF-3 — PR #59 (`TF-3-maven-multimodule`), review zrobiony 2026-09-19,
-czeka na tytuł/opis PR-a i squash-merge.
-**Następny task:** TF-4 — `docker-compose.yml` od zera (Postgres, Redis, RabbitMQ, MailHog).
+**Aktualny sprint:** Sprint 0 — Fundament (3/6 DONE)
+**Ostatnio ukończone:** TF-3 — PR #59 + followup PR #60, oba squash-merged 2026-09-19.
+**W toku:** TF-4 — `docker-compose.yml` od zera (Postgres, Redis, RabbitMQ, MailHog);
+na boardzie In Progress od 2026-09-21, brief jeszcze nie wydany.
+**Potem:** TF-5 (GitHub Actions), TF-6 (README + ADR-0001..0003). Prognoza końca sprintu: 28.09–05.10.
 
 ### TF-3 — co ustalono (2026-09-19)
 
