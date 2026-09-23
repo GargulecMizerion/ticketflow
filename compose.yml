@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres:18
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Password for postgres user is reqiured}
+    volumes:
+      - postgres-data:/var/lib/postgresql
+
+volumes:
+  postgres-data:

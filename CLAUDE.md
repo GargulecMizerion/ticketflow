@@ -96,7 +96,23 @@ lepiej niż samo tłumaczenie.
 **Aktualny sprint:** Sprint 0 — Fundament (3/6 DONE)
 **Ostatnio ukończone:** TF-3 — PR #59 + followup PR #60, oba squash-merged 2026-09-19.
 **W toku:** TF-4 — `docker-compose.yml` od zera (Postgres, Redis, RabbitMQ, MailHog);
-na boardzie In Progress od 2026-09-21, brief jeszcze nie wydany.
+na boardzie In Progress od 2026-09-21, brief wydany w czacie 2026-09-21 (3 decyzje Kaymana:
+1 Postgres z 5 bazami vs 5 kontenerów, MailHog → Mailpit, nazwa pliku compose).
+Materiały po polsku: `notatki/TF-4-docker-compose-po-polsku.html` (katalog w `.gitignore`).
+- Decyzja 1 (2026-09-23): **1 kontener Postgres, 5 baz, 1 wolumin nazwany.** Do spisania
+  jako ADR-0006 (Kayman). Izolacja „baza per serwis" ma być zachowana osobnym userem
+  per baza — pilnować w review. Decyzje 2 (Mailpit) i 3 (nazwa pliku) — otwarte.
+- Kayman zrozumiał woluminy (warstwa kontenera vs wolumin, punkt montowania, ścieżka
+  PG 18, auto-tworzenie przez Compose, prefiks nazwy projektu).
+- Gałąź naprawiona (2026-09-23): lokalny `main` śledzi `origin/main`.
+- **Stan na koniec sesji 2026-09-23:** `compose.yml` w root (untracked, nic nie scommitowane),
+  działa tylko `postgres:18` z woluminem `ticketflow_postgres-data`. Docker: Kayman używa
+  **Docker Desktop** (context `desktop-linux`); równolegle działa systemowy `docker-ce` —
+  dwa osobne demony z osobnymi woluminami, wybór nie został jawnie potwierdzony ani zapisany.
+- **Otwarte w TF-4:** port wystawiony na `0.0.0.0` (Pułapka 4) i bez cudzysłowów; literówka
+  `reqiured`; skrypt init 5 baz + osobny user per baza; test trwałości (down bez -v → up);
+  healthcheck; Redis, RabbitMQ (stały hostname), Mailpit/MailHog; ADR-0006; skąd bierze się
+  `POSTGRES_PASSWORD` i czy `.env` jest w `.gitignore`.
 **Potem:** TF-5 (GitHub Actions), TF-6 (README + ADR-0001..0003). Prognoza końca sprintu: 28.09–05.10.
 
 ### TF-3 — co ustalono (2026-09-19)

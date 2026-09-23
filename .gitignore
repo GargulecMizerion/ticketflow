@@ -5,3 +5,6 @@ node_modules/
 .idea/
 .DS_Store
 .vscode/
+
+# lokalne notatki (materiały z artefaktów Claude), nie wchodzą do repo
+notatki/
